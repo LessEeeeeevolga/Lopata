@@ -11,11 +11,14 @@ def start_message_response(message):
 
 @bot.message_handler(content_types=['text'])
 def any_message_response(message):
-    border = int(message.text)
-    if border < 1:
-        bot.send_message(message.chat.id, 'Брат, я так не умею :(')
-        return
-    number = random.randint(1, border)
-    bot.send_message(message.chat.id, number)
+    if message.text.isdigit():
+        border = int(message.text) #преобразует строку в число
+        if border == 0:
+            bot.send_message(message.chat.id, 'Брат, пришли мне положительное число')
+        else:
+            number = random.randint(1, border) #получаем случайное число
+            bot.send_message(message.chat.id, number) #отправляем его
+    else:
+        bot.send_message(message.chat.id, 'Брат, пришли мне положительное число')
 
-bot.polling()
+bot.polling(non_stop=True)
